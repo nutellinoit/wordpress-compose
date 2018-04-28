@@ -1,4 +1,4 @@
-# WPDC - Wordpress Docker Compose
+# Wordpress Docker Compose
 
 ## No Brain start
 
