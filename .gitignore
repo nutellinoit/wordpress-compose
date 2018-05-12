@@ -55,4 +55,5 @@ fabric.properties
 /wp-database
 /dumpdb
 /dumpdata
+/minio_storage
 docker-compose.yml
