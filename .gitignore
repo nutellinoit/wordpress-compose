@@ -54,3 +54,4 @@ fabric.properties
 /wp-data
 /wp-database
 /dumpdb
+/dumpdata

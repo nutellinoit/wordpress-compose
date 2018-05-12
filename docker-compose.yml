@@ -1,7 +1,7 @@
 version: '2'
 services:
   wordpress:
-    image: wordpress
+    image: nutellinoit/wordpress:php7.0-apache
     restart: always
     ports:
       - "${HOST_HTTP_PORT}:80"
@@ -11,23 +11,47 @@ services:
     depends_on:
       - db
   db:
-    image: mysql:latest
+    image: mysql:5.7.22
     restart: always
     volumes:
       - ./wp-database:/var/lib/mysql/
     environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_ROOT_PASSWORD: ${ROOTPASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
   sidecar-backup-mysql:
-    image: nutellinoit/sidecar-backup-mysql:1.0
+    image: nutellinoit/sidecar-backup-mysql:2.6
     volumes:
         - ./dumpdb:/go/src/app/dumpdb
     restart: always
     environment:
-      - MYSQL_HOST=db
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=${ROOTPASSWORD}
-      - MYSQL_SQL_FILENAME=wordpress_backup
-      - SCHEDULE=0 * * * * *
+        - MYSQL_HOST=${MYSQL_HOST}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_SQL_FILENAME=${MYSQL_SQL_FILENAME}
+        - SCHEDULE=${SCHEDULE}
+        - S3_UPLOAD=${S3_UPLOAD}
+        - S3_BUCKET=${S3_BUCKET}
+        - S3_KEY=${S3_KEY}
+        - S3_SECRET=${S3_SECRET}
+        - S3_HOST=${S3_HOST}
+        - S3_PROTOCOL=${S3_PROTOCOL}
+        - ZIP_FILE=${ZIP_FILE}
+        - MYSQL_ALL_DB=${MYSQL_ALL_DB}
+  sidecar-backup-volumes:
+    image: nutellinoit/sidecar-backup-volumes:1.1
+    volumes:
+        - ./dumpdata:/go/src/app/dumpdata # Local temp repository
+    restart: always
+    environment:
+        - FOLDERS=${FOLDERS}
+        - SCHEDULE=${SCHEDULE}
+        - S3_UPLOAD=${S3_UPLOAD}
+        - S3_BUCKET=${S3_BUCKET}
+        - S3_KEY=${S3_KEY}
+        - S3_SECRET=${S3_SECRET}
+        - S3_HOST=${S3_HOST}
+        - S3_PROTOCOL=${S3_PROTOCOL}
+    volumes_from:
+        - wordpress:ro
 
