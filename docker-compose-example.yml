@@ -18,6 +18,10 @@ services:
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+  redis:
+    restart: always
+    image: redis:3
+
 #### ENABLE THIS SECTION TO ENABLE BACKUP
 #  sidecar-backup-mysql:
 #    image: nutellinoit/sidecar-backup-mysql:2.6
