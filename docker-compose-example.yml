@@ -24,7 +24,7 @@ services:
 
 #### ENABLE THIS SECTION TO ENABLE BACKUP
 #  sidecar-backup-mysql:
-#    image: nutellinoit/sidecar-backup-mysql:2.6
+#    image: nutellinoit/sidecar-backup-mysql:2.7
 #    volumes:
 #        - ./dumpdb:/go/src/app/dumpdb
 #    restart: always
@@ -44,7 +44,7 @@ services:
 #        - ZIP_FILE=${ZIP_FILE}
 #        - MYSQL_ALL_DB=${MYSQL_ALL_DB}
 #  sidecar-backup-volumes:
-#    image: nutellinoit/sidecar-backup-volumes:1.1
+#    image: nutellinoit/sidecar-backup-volumes:1.2
 #    volumes:
 #        - ./dumpdata:/go/src/app/dumpdata # Local temp repository
 #    restart: always
