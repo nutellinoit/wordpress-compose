@@ -6,7 +6,6 @@ services:
     ports:
       - "${HOST_HTTP_PORT}:80"
     volumes:
-      - ./config/php.conf.uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ./wp-app:/var/www/html
     depends_on:
       - db

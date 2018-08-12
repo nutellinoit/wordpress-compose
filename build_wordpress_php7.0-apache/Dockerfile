@@ -3,3 +3,4 @@ RUN apt-get update && \
     apt-get install -y \
         zlib1g-dev
 RUN docker-php-ext-install zip
+ADD php.conf.uploads.ini /usr/local/etc/php/conf.d/uploads.ini
