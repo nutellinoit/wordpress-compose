@@ -57,3 +57,4 @@ fabric.properties
 /dumpdata
 /minio_storage
 docker-compose.yml
+/build_wordpress_php7.0-apache/php.conf.uploads.ini
