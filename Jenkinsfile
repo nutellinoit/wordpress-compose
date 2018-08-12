@@ -18,6 +18,7 @@ node {
     stage('Push image') {
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
             app.push("php7.0-apache")
+            app.push("php7.0-apache-dev-${env.BUILD_NUMBER}")
         }
     }
 }
