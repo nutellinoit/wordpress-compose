@@ -2,7 +2,6 @@ pipeline {
 
     stages {
 
-        def app
 
         stage('Clone repository') {
            steps {
@@ -18,9 +17,9 @@ pipeline {
         }
 
         stage('Build image') {
-         def app
+
          steps {
-            app = docker.build("nutellinoit/wordpress:php7.0-apache","--pull build_wordpress_php7.0-apache/")
+              docker.build("nutellinoit/wordpress:php7.0-apache","--pull build_wordpress_php7.0-apache/")
             }
         }
 
@@ -40,11 +39,11 @@ pipeline {
         }
 
         stage('Push image') {
-        steps {
-            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                app.push("php7.0-apache")
-            }
-            }
+            steps {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        push("nutellinoit/wordpress:php7.0-apache")
+                    }
+                }
         }
 
 
