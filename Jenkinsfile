@@ -17,6 +17,7 @@ node {
 
     stage('Test image') {
         app.inside {
+            sh 'cd /var/www/html'
             sh '/start.sh &'
             sh 'sleep 20'
             sh '/tests.sh'
