@@ -16,12 +16,13 @@ node {
 
 
     stage('Test image') {
-        app.inside {
-            sh 'cd /var/www/html'
-            sh '/start.sh &'
-            sh 'sleep 20'
-            sh '/tests.sh'
-        }
+
+        docker.image('nutellinoit/wordpress:php7.0-apache').withRun('') { c ->
+                sh 'cd /var/www/html'
+                sh '/start.sh &'
+                sh 'sleep 20'
+                sh '/tests.sh'
+            }
     }
 
 
