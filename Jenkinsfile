@@ -15,20 +15,13 @@ node {
     }
 
 
-    stages {
-            stage('Test image') {
-                agent {
-                    docker { image 'nutellinoit/wordpress:php7.0-apache' }
-                }
-                steps {
-                    sh 'number=$(curl -L http://localhost 2>&1 | grep wp-admin | wc -l)'
-                    sh 'if [ $number -gt 1 ]; then echo "OK"; else exit 125; fi'
-                }
-            }
+   stage('Test image') {
 
-        }
-
-
+    app.inside {
+        sh 'number=$(curl -L http://localhost 2>&1 | grep wp-admin | wc -l)'
+        sh 'if [ $number -gt 1 ]; then echo "OK"; else exit 125; fi'
+    }
+}
 
 
     stage('Push image') {
