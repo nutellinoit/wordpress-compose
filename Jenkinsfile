@@ -21,7 +21,7 @@ node {
                     docker { image 'nutellinoit/wordpress:php7.0-apache' }
                 }
                 steps {
-                    sh "number=$(curl -L http://localhost 2>&1 | grep wp-admin | wc -l)"
+                    sh 'number=$(curl -L http://localhost 2>&1 | grep wp-admin | wc -l)'
                     sh 'if [ $number -gt 1 ]; then echo "OK"; else exit 125; fi'
                 }
             }
@@ -29,12 +29,6 @@ node {
         }
 
 
-    stage('Test image'){
-        sh docker run --name testwordpressjenkins -p 64083:80 nutellinoit/wordpress:php7.0-apache
-        sh "number=$(curl -L http://localhost:64083 2>&1 | grep wp-admin | wc -l)"
-        sh 'if [ $number -gt 1 ]; then echo "OK"; else docker stop testwordpressjenkins ; docker rm testwordpressjenkins; exit 125; fi'
-
-    }
 
 
     stage('Push image') {
