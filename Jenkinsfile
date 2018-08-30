@@ -34,5 +34,22 @@ node {
             app.push("php7.0-apache-dev-${env.BUILD_NUMBER}")
         }
     }
+
+
+    stage('Copy custom conf prod') {
+            sh "cp config/php.prod.ini build_wordpress_php7.0-apache/php.conf.uploads.ini"
+        }
+
+    stage('Build image 7.0-apache-prod') {
+            app = docker.build("nutellinoit/wordpress:php7.0-apache-prod","--pull build_wordpress_php7.0-apache/")
+        }
+
+
+        stage('Push image 7.0-apache-prod') {
+            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                app.push("php7.0-apache-prod")
+                app.push("php7.0-apache-prod-dev-${env.BUILD_NUMBER}")
+            }
+        }
 }
 
